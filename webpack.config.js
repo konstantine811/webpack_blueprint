@@ -1,8 +1,33 @@
 const path = require("path");
+const fs = require("fs");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const HtmlWebpackPugPlugin = require("html-webpack-pug-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 const mode = process.env.NODE_ENV || "development";
+
+const PATHS = {
+  pugPages: "src/pug/pages/",
+};
+
+const PAGES_DIR = path.join(__dirname, PATHS.pugPages);
+const PAGES = fs
+  .readdirSync(PAGES_DIR)
+  .filter((fileName) => fileName.endsWith(".pug"));
+
+const pug = {
+  test: /\.pug$/,
+  use: [
+    "html-loader",
+    {
+      loader: "pug-html-loader",
+      options: {
+        pretty: true,
+      },
+    },
+  ],
+};
 
 module.exports = {
   entry: "./src/index.ts",
@@ -16,21 +41,22 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.s[ac]ss$/i,
+        test: /\.(sa|sc|c)ss$/,
         use: [
-          "style-loader",
+          MiniCssExtractPlugin.loader,
           "css-loader",
-          "sass-loader",
           {
             loader: "postcss-loader",
             options: {
               postcssOptions: {
-                plugins: () => [autoprefixer()],
+                plugins: [["autoprefixer"]],
               },
             },
           },
+          "sass-loader",
         ],
       },
+      pug,
     ],
   },
   resolve: {
@@ -42,9 +68,20 @@ module.exports = {
     open: true,
   },
   plugins: [
-    new CleanWebpackPlugin({ cleanStaleWebpackAsssets: false }),
-    new HtmlWebpackPlugin({
-      template: "./src/index.html",
+    new CleanWebpackPlugin({
+      cleanStaleWebpackAssets: false,
+    }),
+    ...PAGES.map(
+      (page) =>
+        new HtmlWebpackPlugin({
+          template: `${PAGES_DIR}/${page}`,
+          filename: `./${page.replace(/\.pug/, ".html")}`,
+        })
+    ),
+    new HtmlWebpackPugPlugin(),
+    new MiniCssExtractPlugin({
+      filename: mode ? "[name].css" : "[name].[contenthash].css",
+      chunkFilename: mode ? "[id].css" : "[id].[contenthash].css",
     }),
   ],
   output: {
