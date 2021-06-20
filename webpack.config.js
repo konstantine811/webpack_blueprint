@@ -33,6 +33,7 @@ module.exports = {
   entry: "./src/index.ts",
   devtool: mode === "development" ? "inline-source-map" : false,
   mode: mode,
+  target: "web",
   module: {
     rules: [
       {
@@ -49,7 +50,7 @@ module.exports = {
             loader: "postcss-loader",
             options: {
               postcssOptions: {
-                plugins: [["autoprefixer"]],
+                plugins: ["autoprefixer"],
               },
             },
           },
