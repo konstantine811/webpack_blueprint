@@ -58,6 +58,28 @@ module.exports = {
         ],
       },
       pug,
+      /* {
+        test: /\.(png|jpg|gif|svg)$/i,
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              limit: 8192,
+            },
+          },
+        ],
+      }, */
+      {
+        test: /\.svg$/i,
+        use: [
+          {
+            loader: "url-loader",
+            options: {
+              generator: (content) => svgToMiniDataURI(content.toString()),
+            },
+          },
+        ],
+      },
     ],
   },
   resolve: {
@@ -72,6 +94,9 @@ module.exports = {
     new CleanWebpackPlugin({
       cleanStaleWebpackAssets: false,
     }),
+    /*   new HtmlWebpackPlugin({
+      template: "./src/index.html",
+    }), */
     ...PAGES.map(
       (page) =>
         new HtmlWebpackPlugin({
