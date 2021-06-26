@@ -46,9 +46,17 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
+        test: /\.(ts|tsx)$/,
+        enforce: 'pre',
+        exclude: path.resolve(__dirname, 'node_modules'),
+        use: [
+          {
+            loader: 'ts-loader',
+          },
+          {
+            loader: 'babel-loader',
+          },
+        ],
       },
       {
         test: /\.(sa|sc|c)ss$/,
@@ -70,7 +78,8 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['.tsx', '.ts', '.js'],
+    extensions: ['*', '.tsx', '.ts', '.js'],
+    modules: ['node_modules', path.resolve(__dirname, 'src')],
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
@@ -98,7 +107,30 @@ module.exports = {
     }),
   ],
   output: {
-    filename: 'bundle.js',
+    filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
+    chunkFilename: '[name].js',
+    clean: true,
+  },
+  optimization: {
+    runtimeChunk: 'single',
+    splitChunks: {
+      chunks: 'all',
+      maxInitialRequests: Infinity,
+      minSize: 0,
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name(module) {
+            // get the name. E.g. node_modules/packageName/not/this/part.js
+            // or node_modules/packageName
+            const packageName = module.context.match(
+              /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+            )[1];
+            return `chunk_${packageName.replace('@', '')}`;
+          },
+        },
+      },
+    },
   },
 };

@@ -3,21 +3,13 @@ block vars
 	-var title = 'Main page'
 	-var description = 'This is main page'
 block content
-	header.main-header
-		.container.container-flex
-			nav.nav-menu
-				ul.nav-menu-container
-					li.item-logo
-						a(href="#")
-							object(type="image/svg+xml" data="../../assets/svg/logo.svg")
-					li.item-link
-						a.txt-link(href="$") Why Alivio
-					li.item-link
-						a.txt-link(href="$") Solutions
-					li.item-link
-						a.txt-link(href="$") Community
-					li.item-link
-						a.txt-link(href="$") Pricing
-			div.nav-menu-auth
-				button.btn Sign-in
-				button.btn Start Trial
+	.txt--center.txt-anim-dna.txt--hover.pt-10
+		each val in ['D', 'N', 'A']
+			span.txt.txt--center.txt--white.title-1.txt-anim-dna__inner= val
+	.txt--center.txt-anim.txt--hover.pt-10
+		each val in ['a', 'n', 'i', 'm', 'a', 't', 'i', 'o', 'n']
+			span.txt.txt--center.txt--white.title-1.txt-anim__inner= val
+	.dna
+		.dna__row
+			.circle
+			.circle

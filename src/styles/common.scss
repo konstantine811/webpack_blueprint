@@ -1,85 +1,62 @@
-body,
-html {
-  margin: 0;
-  height: 100%;
-  background-color: blanchedalmond;
-  font-family: "Lato", sans-serif;
+$main-color: #d4e9eb;
+$shadow-color: rgba(52, 43, 133, 0.219);
+
+body {
+  background-color: $main-color;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-a {
-  text-decoration: none;
-}
-
-button {
-  background-color: transparent;
-  border: none;
-  font-family: "Lato", sans-serif;
-}
-
-.main-header {
-  background-color: white;
-}
-
-.nav-menu-container {
-  display: flex;
-  align-items: center;
-}
-
-.container {
-  max-width: 1400px;
-  padding: 0 15px;
-  margin: 0 auto;
-}
-
-.container-flex {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.txt-link {
-  color: #292929;
-  padding: 30px 0 31px;
+.txt {
   display: inline-block;
-  transition: all 0.3s ease;
-}
-
-.txt-link:hover {
-  box-shadow: inset 0px -2px 0 0 green;
-}
-
-.item-link {
-  margin-right: 72px;
-  color: $black;
-  &--red {
-    color: red;
+  &--center {
+    text-align: center;
   }
-  &--black {
-    color: black;
+  &--white {
+    color: $main-color;
   }
-  &--blue {
-    color: blue;
+  &--hover:hover {
+    transition: filter 0.6s ease;
+    cursor: pointer;
+  }
+  &-anim {
+    &__inner {
+      animation: shadow_anim 2.8s ease-in alternate infinite;
+    }
+    @for $i from 1 through 9 {
+      &__inner:nth-child(#{$i}) {
+        animation-delay: #{$i / 9 + 0.6}s;
+      }
+    }
+  }
+  &-anim-dna {
+    &__inner {
+      animation: shadow_anim 2.8s linear alternate infinite;
+    }
+    @for $i from 1 through 3 {
+      &__inner:nth-child(#{$i}) {
+        animation-delay: #{$i / 3.14 * 1.5}s;
+      }
+    }
   }
 }
 
-.item:nth-child(2) {
-  animation: dsfs 0.3s 0.2s ease backwards;
+.pt {
+  &-10 {
+    padding-top: 20px;
+  }
 }
 
-.item:nth-child(3) {
-  animation: dsfs 0.3s 0.4s ease backwards;
+.title {
+  &-1 {
+    font-size: 90px;
+  }
 }
 
-.item:nth-child(4) {
-  animation: dsfs 0.3s 0.6s ease backwards;
+@keyframes shadow_anim {
+  0% {
+    filter: drop-shadow(0px 0px 0px transparent) blur(0);
+  }
+  100% {
+    filter: drop-shadow(10px 10px 4px $shadow-color) blur(3px);
+  }
 }
