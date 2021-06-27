@@ -47,16 +47,8 @@ module.exports = {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        enforce: 'pre',
         exclude: path.resolve(__dirname, 'node_modules'),
-        use: [
-          {
-            loader: 'ts-loader',
-          },
-          {
-            loader: 'babel-loader',
-          },
-        ],
+        use: ['ts-loader'],
       },
       {
         test: /\.(sa|sc|c)ss$/,
