@@ -11,15 +11,7 @@ block content
 			span.txt.txt--center.txt--white.title-1.txt-anim__inner= val
 	.dna-wrap
 		.dna
-			.dna__row
-				.circle
-				.circle
-			.dna__row
-				.circle
-				.circle
-			.dna__row
-				.circle
-				.circle
-			.dna__row
-				.circle
-				.circle
+			for n in Array(20)
+				.dna__row
+					.circle
+					.circle

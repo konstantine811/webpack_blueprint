@@ -1,5 +1,9 @@
 $main-color: #d4e9eb;
 $shadow-color: rgba(52, 43, 133, 0.219);
+$circle-anim: 2s infinite ease-in;
+$circle-container: 100px;
+$circle-diameter: 20px;
+$circle-translate: $circle-container - $circle-diameter;
 
 body {
   background-color: $main-color;
@@ -43,44 +47,47 @@ body {
 .dna-wrap {
   display: flex;
   justify-content: center;
+  height: 50%;
+  align-items: center;
 }
 
 .dna {
   perspective: 1000px;
   display: flex;
+  animation: rotation_anim 14s ease alternate infinite;
+  filter: drop-shadow(0px 40px 10px black);
   &__row {
     width: 30px;
-    height: 200px;
+    height: $circle-container;
     position: relative;
-    filter: drop-shadow(0px 40px 10px black);
   }
 }
 
 .circle {
-  width: 15px;
-  height: 15px;
+  width: $circle-diameter;
+  height: $circle-diameter;
   border-radius: 50%;
   position: absolute;
   z-index: 2;
   &:nth-child(1) {
     top: 0;
     background-color: rgb(92, 107, 240);
-    animation: circle_anim_1 1.8s infinite ease;
+    animation: circle_anim_1 $circle-anim;
   }
   &:nth-child(2) {
     bottom: 0;
     background-color: rgb(247, 103, 84);
-    animation: circle_anim_2 1.8s infinite ease;
+    animation: circle_anim_2 $circle-anim;
   }
 }
 
-@for $i from 1 through 10 {
+@for $i from 1 through 24 {
   .dna__row:nth-child(#{$i}) {
     .circle:nth-child(1) {
-      animation-delay: #{$i / 10}s;
+      animation-delay: #{($i / 10) - 0.1}s;
     }
     .circle:nth-child(2) {
-      animation-delay: #{$i / 10}s;
+      animation-delay: #{($i / 10) - 0.1}s;
     }
   }
 }
@@ -115,17 +122,7 @@ body {
     transform: translate(0, 0);
   }
   50% {
-    transform: translate(0, 180px);
-  }
-}
-
-@keyframes circle_scale {
-  0%,
-  100% {
-    filter: drop-shadow(0px 10px 10px black);
-  }
-  25% {
-    filter: drop-shadow(0px 50px 10px black);
+    transform: translate(0, $circle-translate);
   }
 }
 
@@ -135,6 +132,20 @@ body {
     transform: translate(0, 0);
   }
   50% {
-    transform: translate(0, -180px);
+    transform: translate(0, -$circle-translate);
+  }
+}
+
+@keyframes rotation_anim {
+  0% {
+    transform: rotate(0);
+    filter: drop-shadow(0px 80px 10px black);
+  }
+  50% {
+    filter: drop-shadow(0px -80px 10px black);
+  }
+  100% {
+    transform: rotate(360deg);
+    filter: drop-shadow(0px 80px 10px black);
   }
 }
