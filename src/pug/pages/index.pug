@@ -3,15 +3,20 @@ block vars
 	-var title = 'Main page'
 	-var description = 'This is main page'
 block content
-	.txt--center.txt-anim-dna.txt--hover.pt-10
-		each val in ['D', 'N', 'A']
-			span.txt.txt--center.txt--white.title-1.txt-anim-dna__inner= val
-	.txt--center.txt-anim.txt--hover.pt-10
-		each val in ['a', 'n', 'i', 'm', 'a', 't', 'i', 'o', 'n']
-			span.txt.txt--center.txt--white.title-1.txt-anim__inner= val
-	.dna-wrap
-		.dna
-			for n in Array(20)
-				.dna__row
-					.circle
-					.circle
+	.content__txt
+		.txt--center.txt-anim-dna.txt--hover.pt-10
+			each val in ['D', 'N', 'A']
+				span.txt.txt--center.txt--white.title-1.txt-anim-dna__inner= val
+		.txt--center.txt-anim.txt--hover.pt-10
+			each val in ['A', 'N', 'I', 'M', 'A', 'T','I', 'O', 'N']
+				span.txt.txt--center.txt--white.title-1.txt-anim__inner= val
+		.txt--center.txt-anim.txt--hover.pt-10
+			each val in ['H', 'I', 'L', 'L', 'E', 'L']
+				span.txt.txt--center.txt--white.title-1.txt-anim__inner= val
+	.content__dna
+		.dna-wrap
+			.dna
+				for n in Array(20)
+					.dna__row
+						.circle
+						.circle
